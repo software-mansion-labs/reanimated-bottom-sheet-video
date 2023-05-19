@@ -13,6 +13,7 @@ import Animated, {
   useSharedValue,
   withSpring,
   runOnJS,
+  interpolate,
 } from "react-native-reanimated";
 import { Easing } from "react-native-reanimated";
 
@@ -32,8 +33,16 @@ function App() {
   const pan = Gesture.Pan()
     .onChange((event) => {
       const offsetDelta = event.changeY + offset.value;
+      console.log(offsetDelta);
 
-      offset.value = offsetDelta > 0 ? offsetDelta : withSpring(OVERDRAG);
+      offset.value =
+        offsetDelta > 0 ? offsetDelta : withSpring(Math.max(-20, offsetDelta));
+      // offset.value = interpolate(
+      //   event.translationY,
+      //   [-300, -200, -100, 0, 100, 200, 300],
+      //   [-55, -50, -40, 0, 100, 200, 300]
+      // );
+      // offset.value = event.translationY;
     })
     .onFinalize(() => {
       if (offset.value < HEIGHT / 3) {
