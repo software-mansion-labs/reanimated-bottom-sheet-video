@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -13,7 +13,17 @@ import Animated, {
   useSharedValue,
   withSpring,
   runOnJS,
+  interpolate,
+  FadeOut,
+  FadeIn,
+  withTiming,
 } from "react-native-reanimated";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import AccentPicker from "./src/components/AccentPicker";
+import Chat from "./src/components/Chat";
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const HEIGHT = 220;
 const OVERDRAG = 20;
@@ -32,103 +42,59 @@ function App() {
     .onChange((event) => {
       const offsetDelta = event.changeY + offset.value;
 
-      offset.value =
-        offsetDelta > 0
-          ? offsetDelta
-          : withSpring(Math.max(-OVERDRAG, offsetDelta));
+      const clamp = Math.max(-OVERDRAG, offsetDelta);
+      offset.value = offsetDelta > 0 ? offsetDelta : withSpring(clamp);
     })
     .onFinalize(() => {
       if (offset.value < HEIGHT / 3) {
         offset.value = withSpring(0);
       } else {
-        runOnJS(toggleSheet)();
+        offset.value = withTiming(HEIGHT, {}, () => {
+          runOnJS(toggleSheet)();
+        });
       }
     });
 
-  const animatedStyles = useAnimatedStyle(() => ({
+  const translateY = useAnimatedStyle(() => ({
     transform: [{ translateY: offset.value }],
+  }));
+
+  const opacity = useAnimatedStyle(() => ({
+    opacity: interpolate(offset.value, [0, HEIGHT], [1, 0]),
   }));
 
   return (
     <GestureHandlerRootView style={styles.container}>
-      <Button title="Toggle Sheet" onPress={toggleSheet} />
-
-      {isOpen && (
-        <GestureDetector gesture={pan}>
-          <Animated.View
-            style={[styles.sheet, animatedStyles]}
-            entering={SlideInDown.springify().damping(15)}
-            exiting={SlideOutDown}
-          >
-            <AccentPicker />
-          </Animated.View>
-        </GestureDetector>
-      )}
+      <SafeAreaProvider>
+        <Chat toggleSheet={toggleSheet} />
+        {isOpen && (
+          <>
+            <AnimatedPressable
+              style={[styles.backdrop, opacity]}
+              entering={FadeIn}
+              onPress={toggleSheet}
+            />
+            <GestureDetector gesture={pan}>
+              <Animated.View
+                style={[styles.sheet, translateY]}
+                entering={SlideInDown.springify().damping(15)}
+                exiting={SlideOutDown}
+              >
+                <AccentPicker />
+              </Animated.View>
+            </GestureDetector>
+          </>
+        )}
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
 
-const colors = [
-  "#ff0064",
-  "#8e3dff",
-  "#f94d55",
-  "#f1c11d",
-  "#0bbebb",
-  "#0d61ff",
-  "#24a248",
-  "#a5f0b5",
-  "#9ef0f2",
-  "#bce6fe",
-  "#d0e1ff",
-  "#e9dcff",
-  "#ffd8e9",
-  "#f3f5f9",
-];
-
-function AccentPicker() {
-  return (
-    <>
-      <Text style={accentStyles.label}>Choose accent</Text>
-      <View style={accentStyles.container}>
-        {colors.map((color) => (
-          <TouchableOpacity
-            key={color}
-            style={{ backgroundColor: color, ...accentStyles.swatch }}
-          />
-        ))}
-      </View>
-    </>
-  );
-}
-
-const accentStyles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-    flex: 1,
-    height: HEIGHT / 2,
-  },
-  label: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
-  swatch: {
-    height: "30%",
-    aspectRatio: 1,
-    borderRadius: 4,
-  },
-});
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#eee",
+    backgroundColor: "#F8F9FF",
   },
-
   sheet: {
     backgroundColor: "white",
     padding: 16,
@@ -138,6 +104,10 @@ const styles = StyleSheet.create({
     bottom: -OVERDRAG,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+  },
+  backdrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
   },
 });
 
