@@ -14,7 +14,6 @@ import Animated, {
   withSpring,
   runOnJS,
   interpolate,
-  FadeOut,
   FadeIn,
   withTiming,
 } from "react-native-reanimated";
@@ -22,14 +21,14 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import AccentPicker from "./src/components/AccentPicker";
 import Chat from "./src/components/Chat";
+import { HEIGHT, OVERDRAG } from "./src/misc/consts";
+import { BACKDROP_COLOR, BACKGROUND_COLOR } from "./src/misc/colors";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-const HEIGHT = 220;
-const OVERDRAG = 20;
-
 function App() {
-  const [isOpen, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(false);
+  const [accent, setAccent] = useState("#782AEB");
 
   const offset = useSharedValue(0);
 
@@ -66,7 +65,7 @@ function App() {
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
-        <Chat toggleSheet={toggleSheet} />
+        <Chat toggleSheet={toggleSheet} accent={accent} />
         {isOpen && (
           <>
             <AnimatedPressable
@@ -80,7 +79,12 @@ function App() {
                 entering={SlideInDown.springify().damping(15)}
                 exiting={SlideOutDown}
               >
-                <AccentPicker />
+                <AccentPicker
+                  onPick={(color) => {
+                    setAccent(color);
+                    toggleSheet();
+                  }}
+                />
               </Animated.View>
             </GestureDetector>
           </>
@@ -93,7 +97,7 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8F9FF",
+    backgroundColor: BACKGROUND_COLOR,
   },
   sheet: {
     backgroundColor: "white",
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    backgroundColor: BACKDROP_COLOR,
   },
 });
 

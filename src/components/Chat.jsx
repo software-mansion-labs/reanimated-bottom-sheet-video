@@ -10,66 +10,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import SettingsIcon from "../icons/SettingsIcon";
 import ArrowLeftIcon from "../icons/ArrowLeftIcon";
+import { messages } from "../misc/messages";
+import { PRIMARY_COLOR } from "../misc/colors";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from "react-native-reanimated";
 
-const messages = [
-  {
-    id: 1,
-    message: "yo! wanna grab some beer tonight?",
-    from: "them",
-  },
-  {
-    id: 2,
-    message: "there's a new cool pub with open taps just down the street",
-    from: "them",
-  },
-  {
-    id: 3,
-    message: "yeah sure what time?",
-    from: "me",
-  },
-  {
-    id: 4,
-    message: "around 8pm?",
-    from: "them",
-  },
-  {
-    id: 5,
-    message: "does that work for you?",
-    from: "them",
-  },
-  {
-    id: 6,
-    message: "could we do a little bit earlier? like 7pm?",
-    from: "me",
-  },
-  {
-    id: 7,
-    message: "yea sounds good",
-    from: "them",
-  },
-  {
-    id: 8,
-    message: "should I bring my +1?",
-    from: "me",
-  },
-  {
-    id: 9,
-    message: "yup, take Natalie with you!",
-    from: "them",
-  },
-  {
-    id: 10,
-    message: "ok, see you there!",
-    from: "me",
-  },
-  {
-    id: 11,
-    message: "cya!",
-    from: "them",
-  },
-];
+function Chat(props) {
+  const { toggleSheet, accent } = props;
 
-function Chat({ toggleSheet }) {
   return (
     <>
       <SafeAreaView style={styles.headerContainer} edges={["top"]}>
@@ -83,22 +35,7 @@ function Chat({ toggleSheet }) {
       </SafeAreaView>
       <ScrollView>
         {messages.map((message) => (
-          <View
-            key={message.id}
-            style={[
-              styles.message,
-              message.from === "me" ? styles.messageMe : styles.messageThem,
-            ]}
-          >
-            <Text
-              style={{
-                ...styles.messageText,
-                color: message.from === "me" ? "white" : "black",
-              }}
-            >
-              {message.message}
-            </Text>
-          </View>
+          <Message key={message.id} message={message} accent={accent} />
         ))}
       </ScrollView>
       <SafeAreaView
@@ -106,6 +43,45 @@ function Chat({ toggleSheet }) {
         edges={["bottom"]}
       ></SafeAreaView>
     </>
+  );
+}
+
+function Message(props) {
+  const { message, accent } = props;
+  const color = useSharedValue(accent);
+
+  React.useEffect(() => {
+    color.value = accent;
+  }, [accent]);
+
+  const background = useAnimatedStyle(() => ({
+    backgroundColor: withDelay(100 * message.id, withTiming(color.value)),
+  }));
+
+  const textColor = useAnimatedStyle(() => ({
+    color: withDelay(
+      100 * message.id,
+      isDarkColor(color.value) ? withTiming("white") : withTiming("black")
+    ),
+  }));
+
+  return (
+    <Animated.View
+      style={
+        message.from === "me"
+          ? [styles.message, styles.messageMe, background]
+          : [styles.message, styles.messageThem]
+      }
+    >
+      <Animated.Text
+        style={[
+          styles.messageText,
+          message.from === "me" ? textColor : { color: "black" },
+        ]}
+      >
+        {message.message}
+      </Animated.Text>
+    </Animated.View>
   );
 }
 
@@ -133,7 +109,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#001A72",
+    color: PRIMARY_COLOR,
   },
   message: {
     maxWidth: "80%",
@@ -158,5 +134,16 @@ const styles = StyleSheet.create({
     borderColor: "#C1C6E5",
   },
 });
+
+function isDarkColor(hex) {
+  "worklet";
+  // https://stackoverflow.com/a/69353003/9999202
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  // https://stackoverflow.com/a/58270890/9999202
+  const hsp = Math.sqrt(0.299 * r ** 2 + 0.587 * g ** 2 + 0.114 * b ** 2);
+  return hsp < 170;
+}
 
 export default Chat;
