@@ -10,8 +10,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import SettingsIcon from "../icons/SettingsIcon";
 import ArrowLeftIcon from "../icons/ArrowLeftIcon";
+import MicrophoneIcon from "../icons/MicrophoneIcon";
+import SendIcon from "../icons/SendIcon";
 import { messages } from "../misc/messages";
-import { PRIMARY_COLOR } from "../misc/colors";
+import { BACKGROUND_COLOR, PRIMARY_COLOR } from "../misc/colors";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -25,7 +27,7 @@ function Chat(props) {
   return (
     <>
       <SafeAreaView style={styles.headerContainer} edges={["top"]}>
-        <View style={styles.header}>
+        <View style={styles.wrapper}>
           <ArrowLeftIcon />
           <Text style={styles.title}>Casper</Text>
           <TouchableOpacity onPress={toggleSheet}>
@@ -38,10 +40,15 @@ function Chat(props) {
           <Message key={message.id} message={message} accent={accent} />
         ))}
       </ScrollView>
-      <SafeAreaView
-        style={styles.footerContainer}
-        edges={["bottom"]}
-      ></SafeAreaView>
+      <SafeAreaView style={styles.footerContainer} edges={["bottom"]}>
+        <View style={styles.wrapper}>
+          <MicrophoneIcon />
+          <View style={styles.textWrapper}>
+            <Text style={styles.text}>Message</Text>
+          </View>
+          <SendIcon />
+        </View>
+      </SafeAreaView>
     </>
   );
 }
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
+  wrapper: {
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
@@ -135,6 +142,18 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: "#C1C6E5",
+  },
+  textWrapper: {
+    flex: 1,
+    backgroundColor: BACKGROUND_COLOR,
+    fontSize: 15,
+    borderRadius: 24,
+    marginHorizontal: 4,
+  },
+  text: {
+    color: "#C1C6E5",
+    fontSize: 15,
+    padding: 8,
   },
 });
 
