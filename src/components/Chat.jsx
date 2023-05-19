@@ -50,17 +50,20 @@ function Message(props) {
   const { message, accent } = props;
   const color = useSharedValue(accent);
 
+  const messagesToAnimate = messages.filter((msg) => msg.from === "me");
+  const index = messagesToAnimate.findIndex((msg) => msg.id === message.id);
+
   React.useEffect(() => {
     color.value = accent;
   }, [accent]);
 
   const background = useAnimatedStyle(() => ({
-    backgroundColor: withDelay(100 * message.id, withTiming(color.value)),
+    backgroundColor: withDelay(150 * index, withTiming(color.value)),
   }));
 
   const textColor = useAnimatedStyle(() => ({
     color: withDelay(
-      100 * message.id,
+      150 * index,
       isDarkColor(color.value) ? withTiming("white") : withTiming("black")
     ),
   }));
