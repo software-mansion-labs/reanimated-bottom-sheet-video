@@ -17,6 +17,7 @@ import Animated, {
 import { Easing } from "react-native-reanimated";
 
 const HEIGHT = 300;
+const OVERDRAG = -10;
 
 function App() {
   const [isOpen, setOpen] = useState(true);
@@ -32,8 +33,7 @@ function App() {
     .onChange((event) => {
       const offsetDelta = event.changeY + offset.value;
 
-      offset.value =
-        offsetDelta > 0 ? offsetDelta : Math.min(offset.value, -10);
+      offset.value = offsetDelta > 0 ? offsetDelta : withSpring(OVERDRAG);
     })
     .onFinalize(() => {
       if (offset.value < HEIGHT / 3) {
