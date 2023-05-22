@@ -32,7 +32,8 @@ function Chat(props) {
       </SafeAreaView>
       <FlatList
         data={messages}
-        initialScrollIndex={messages.length - 1}
+        inverted
+        contentContainerStyle={styles.reverse}
         renderItem={({ item }) => (
           <Message key={item.id} message={item} accent={accent} />
         )}
@@ -54,6 +55,9 @@ function Chat(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  reverse: {
+    flexDirection: "column-reverse",
   },
   wrapper: {
     flexDirection: "row",
