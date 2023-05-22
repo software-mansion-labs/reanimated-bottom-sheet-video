@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     bottom: -OVERDRAG,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    zIndex: 1,
   },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
