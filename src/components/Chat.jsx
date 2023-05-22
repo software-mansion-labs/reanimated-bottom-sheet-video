@@ -32,6 +32,7 @@ function Chat(props) {
       </SafeAreaView>
       <FlatList
         data={messages}
+        initialScrollIndex={messages.length - 1}
         renderItem={({ item }) => (
           <Message key={item.id} message={item} accent={accent} />
         )}
