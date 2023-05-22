@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     height: HEIGHT,
     width: "100%",
     position: "absolute",
-    bottom: -OVERDRAG,
+    bottom: -OVERDRAG * 1.1,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     zIndex: 1,
