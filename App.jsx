@@ -22,13 +22,17 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import AccentPicker from "./src/components/AccentPicker";
 import Chat from "./src/components/Chat";
 import { HEIGHT, OVERDRAG } from "./src/misc/consts";
-import { BACKDROP_COLOR, BACKGROUND_COLOR } from "./src/misc/colors";
+import {
+  ACCENT_COLOR,
+  BACKDROP_COLOR,
+  BACKGROUND_COLOR,
+} from "./src/misc/colors";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 function App() {
   const [isOpen, setOpen] = useState(false);
-  const [accent, setAccent] = useState("#782AEB");
+  const accent = useSharedValue(ACCENT_COLOR);
 
   const offset = useSharedValue(0);
 
@@ -81,7 +85,7 @@ function App() {
               >
                 <AccentPicker
                   onPick={(color) => {
-                    setAccent(color);
+                    accent.value = color;
                     toggleSheet();
                   }}
                 />

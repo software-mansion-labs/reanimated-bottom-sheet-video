@@ -13,10 +13,15 @@ import ArrowLeftIcon from "../icons/ArrowLeftIcon";
 import MicrophoneIcon from "../icons/MicrophoneIcon";
 import SendIcon from "../icons/SendIcon";
 import { messages } from "../misc/messages";
-import { BACKGROUND_COLOR, PRIMARY_COLOR } from "../misc/colors";
+import {
+  ACCENT_COLOR,
+  BACKGROUND_COLOR,
+  BORDER_COLOR,
+  PRIMARY_COLOR,
+} from "../misc/colors";
 import Animated, {
   useAnimatedStyle,
-  useSharedValue,
+  useDerivedValue,
   withDelay,
   withTiming,
 } from "react-native-reanimated";
@@ -57,14 +62,10 @@ function Chat(props) {
 
 function Message(props) {
   const { message, accent } = props;
-  const color = useSharedValue(accent);
+  const color = useDerivedValue(() => accent.value);
 
   const messagesToAnimate = messages.filter((msg) => msg.from === "me");
   const index = messagesToAnimate.findIndex((msg) => msg.id === message.id);
-
-  React.useEffect(() => {
-    color.value = accent;
-  }, [accent]);
 
   const background = useAnimatedStyle(() => ({
     backgroundColor: withDelay(150 * index, withTiming(color.value)),
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: "white",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#C1C6E5",
+    borderBottomColor: BORDER_COLOR,
   },
   footerContainer: {
     backgroundColor: "white",
@@ -137,13 +138,13 @@ const styles = StyleSheet.create({
   },
   messageMe: {
     alignSelf: "flex-end",
-    backgroundColor: "#782AEB",
+    backgroundColor: ACCENT_COLOR,
   },
   messageThem: {
     alignSelf: "flex-start",
     backgroundColor: "white",
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#C1C6E5",
+    borderColor: BORDER_COLOR,
   },
   textWrapper: {
     flex: 1,
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   text: {
-    color: "#C1C6E5",
+    color: BORDER_COLOR,
     fontSize: 15,
     padding: 8,
   },
