@@ -1,7 +1,7 @@
 export const messages = [
   {
     id: "77c3b675-d205-4045-ab0d-f8ddc8034d2f",
-    message: "yo! wanna grab some beer tonight?",
+    message: "yo! wanna grab some beer tonight? 🍺",
     from: "them",
   },
   {
@@ -31,7 +31,7 @@ export const messages = [
   },
   {
     id: "f0b76422-f7e9-4d92-8a8b-4d051affb358",
-    message: "yea sounds good",
+    message: "yea sounds good 👍",
     from: "them",
   },
   {
@@ -46,7 +46,7 @@ export const messages = [
   },
   {
     id: "de58f781-88c2-48df-9298-4f389aa70559",
-    message: "ok, see you there!",
+    message: "ok, see you there! 👋",
     from: "me",
   },
   {
