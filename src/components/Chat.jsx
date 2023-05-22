@@ -4,7 +4,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
+  FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -35,11 +35,13 @@ function Chat(props) {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-      <ScrollView>
-        {messages.map((message) => (
-          <Message key={message.id} message={message} accent={accent} />
-        ))}
-      </ScrollView>
+      <FlatList
+        data={messages}
+        renderItem={({ item }) => (
+          <Message key={item.id} message={item} accent={accent} />
+        )}
+        keyExtractor={(item) => item.id}
+      />
       <SafeAreaView style={styles.footerContainer} edges={["bottom"]}>
         <View style={styles.wrapper}>
           <MicrophoneIcon />
