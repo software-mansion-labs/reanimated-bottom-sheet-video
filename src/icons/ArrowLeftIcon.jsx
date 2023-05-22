@@ -1,5 +1,9 @@
+// SWM ICON PACK - figma.com/community/file/942053544758339202
+// Code generated with react-svgr.com/playground/?native=true
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
+import { PRIMARY_COLOR } from "../misc/colors";
+
 const ArrowLeftIcon = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
@@ -9,7 +13,7 @@ const ArrowLeftIcon = (props) => (
     {...props}
   >
     <Path
-      stroke="#001A72"
+      stroke={PRIMARY_COLOR}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}

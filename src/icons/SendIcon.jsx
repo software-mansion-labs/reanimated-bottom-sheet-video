@@ -1,6 +1,9 @@
-// Generated with react-svgr.com/playground/?native=true from figma.com/community/file/942053544758339202
+// SWM ICON PACK - figma.com/community/file/942053544758339202
+// Code generated with react-svgr.com/playground/?native=true
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
+import { PRIMARY_COLOR } from "../misc/colors";
+
 const SendIcon = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +13,7 @@ const SendIcon = (props) => (
     {...props}
   >
     <Path
-      stroke="#001A72"
+      stroke={PRIMARY_COLOR}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
