@@ -7,15 +7,15 @@ import {
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import Animated, {
-  SlideInDown,
-  SlideOutDown,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   runOnJS,
-  interpolate,
-  FadeIn,
   withTiming,
+  SlideInDown,
+  SlideOutDown,
+  FadeIn,
+  FadeOut,
 } from "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -62,10 +62,6 @@ function App() {
     transform: [{ translateY: offset.value }],
   }));
 
-  const opacity = useAnimatedStyle(() => ({
-    opacity: interpolate(offset.value, [0, HEIGHT], [1, 0]),
-  }));
-
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
@@ -73,8 +69,9 @@ function App() {
         {isOpen && (
           <>
             <AnimatedPressable
-              style={[styles.backdrop, opacity]}
+              style={styles.backdrop}
               entering={FadeIn}
+              exiting={FadeOut}
               onPress={toggleSheet}
             />
             <GestureDetector gesture={pan}>
@@ -117,6 +114,7 @@ const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: BACKDROP_COLOR,
+    zIndex: 1,
   },
 });
 
