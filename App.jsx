@@ -32,8 +32,8 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 function App() {
   const [isOpen, setOpen] = useState(false);
+  
   const accent = useSharedValue(ACCENT_COLOR);
-
   const offset = useSharedValue(0);
 
   const toggleSheet = () => {
