@@ -12,8 +12,8 @@ import { messages } from "../misc/messages";
 function Message(props) {
   const { message, accent } = props;
 
-  const messagesToAnimate = messages.filter((msg) => msg.from === "me");
-  const index = messagesToAnimate.findIndex((msg) => msg.id === message.id);
+  const messagesFromMe = messages.filter((msg) => msg.from === "me");
+  const index = messagesFromMe.findIndex((msg) => msg.id === message.id);
 
   const background = useAnimatedStyle(() => ({
     backgroundColor: withDelay(150 * index, withTiming(accent.value)),
