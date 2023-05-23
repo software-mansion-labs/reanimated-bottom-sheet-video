@@ -53,9 +53,6 @@ function Chat(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   reverse: {
     flexDirection: "column-reverse",
   },

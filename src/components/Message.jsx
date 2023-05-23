@@ -7,7 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { ACCENT_COLOR, BACKGROUND_COLOR, BORDER_COLOR } from "../misc/colors";
+import { ACCENT_COLOR, BORDER_COLOR } from "../misc/colors";
 import { messages } from "../misc/messages";
 
 function Message(props) {
@@ -70,18 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: BORDER_COLOR,
-  },
-  textWrapper: {
-    flex: 1,
-    backgroundColor: BACKGROUND_COLOR,
-    fontSize: 15,
-    borderRadius: 24,
-    marginHorizontal: 4,
-  },
-  text: {
-    color: BORDER_COLOR,
-    fontSize: 15,
-    padding: 8,
   },
 });
 

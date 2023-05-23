@@ -20,7 +20,7 @@ function AccentPicker({ onPick }) {
         {colors.map((color) => (
           <TouchableOpacity
             key={color}
-            style={{ backgroundColor: color, ...styles.swatch }}
+            style={[styles.swatch, { backgroundColor: color }]}
             onPress={() => onPick(color)}
           />
         ))}
