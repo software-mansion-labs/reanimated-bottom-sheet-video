@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import Animated, {
   useAnimatedStyle,
-  useDerivedValue,
   withDelay,
   withTiming,
 } from "react-native-reanimated";
@@ -12,34 +11,34 @@ import { messages } from "../misc/messages";
 
 function Message(props) {
   const { message, accent } = props;
-  const color = useDerivedValue(() => accent.value);
 
   const messagesToAnimate = messages.filter((msg) => msg.from === "me");
   const index = messagesToAnimate.findIndex((msg) => msg.id === message.id);
 
   const background = useAnimatedStyle(() => ({
-    backgroundColor: withDelay(150 * index, withTiming(color.value)),
+    backgroundColor: withDelay(150 * index, withTiming(accent.value)),
   }));
 
-  const textColor = useAnimatedStyle(() => ({
+  const color = useAnimatedStyle(() => ({
     color: withDelay(
       150 * index,
-      isDarkColor(color.value) ? withTiming("white") : withTiming("black")
+      isDarkColor(accent.value) ? withTiming("white") : withTiming("black")
     ),
   }));
 
   return (
     <Animated.View
-      style={
+      style={[
+        styles.message,
         message.from === "me"
-          ? [styles.message, styles.messageMe, background]
-          : [styles.message, styles.messageThem]
-      }
+          ? [styles.messageMe, background]
+          : styles.messageThem,
+      ]}
     >
       <Animated.Text
         style={[
           styles.messageText,
-          message.from === "me" ? textColor : { color: "black" },
+          message.from === "me" ? color : { color: "black" },
         ]}
       >
         {message.message}
