@@ -1,20 +1,42 @@
-# Reanimated example
+# 🎥 How to build a bottom sheet with React Native Reanimated
 
-<p>
-  <!-- iOS -->
-  <img alt="Supports Expo iOS" longdesc="Supports Expo iOS" src="https://img.shields.io/badge/iOS-4630EB.svg?style=flat-square&logo=APPLE&labelColor=999999&logoColor=fff" />
-  <!-- Android -->
-  <img alt="Supports Expo Android" longdesc="Supports Expo Android" src="https://img.shields.io/badge/Android-4630EB.svg?style=flat-square&logo=ANDROID&labelColor=A4C639&logoColor=fff" />
-  <!-- Web -->
-</p>
+This repository contains the source code of a project used in the [How to build a bottom sheet with React Native Reanimated] video on Software Mansion's [YouTube channel](https://www.youtube.com/@SoftwareMansion).
 
-## 🚀 How to use
+You can use this code to follow along the video or compare your code with the final solution.
 
-> `npx create-react-native-app my-app -t with-reanimated`
+## How to use
 
-- Run `yarn` or `npm install`
-- Run `yarn start` or `npm run start` to try it out.
+The repository contains two branches: `start`, and `final`.
 
-## 📝 Notes
+- `start` is the starting point of the project that you can follow along.
+- `final` is the final result of the video. If you ever get stuck, or you just want to skip to the code, you can check how the final effect there.
 
-- [`react-native-reanimated` docs](https://docs.swmansion.com/react-native-reanimated/)
+You can switch between branches on GitHub with the button in the top left corner of this page:
+
+## Running the project
+
+Clone the repository onto your computer:
+
+```sh
+git clone https://github.com/software-mansion-labs/reanimated-bottom-sheet-video.git
+```
+
+Checkout into the project folder:
+
+```sh
+cd reanimated-bottom-sheet-video
+```
+
+Install the packages with `yarn`:
+
+```sh
+yarn install
+```
+
+And, start the projectL:
+
+```sh
+yarn start
+```
+
+You may use your phone to test the app via [Expo Go](https://docs.expo.dev/get-started/expo-go/) app, or run the project locally using iOS simulator or Android emulator.
