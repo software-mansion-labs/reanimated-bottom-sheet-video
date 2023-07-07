@@ -13,6 +13,9 @@ The repository contains two branches: `start`, and `final`.
 
 You can switch between branches on GitHub with the button in the top left corner of this page:
 
+<img width="920" alt="Screenshot 2023-07-07 at 11 41 33" src="https://github.com/software-mansion-labs/reanimated-bottom-sheet-video/assets/39658211/7c66283c-4b22-4edd-92f2-75b8e0ffab75">
+
+
 ## Running the project
 
 Clone the repository onto your computer:
