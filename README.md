@@ -1,6 +1,6 @@
-# 🎥 How to build a bottom sheet with React Native Reanimated
+# 🎥 How to make a bottom sheet with React Native Reanimated
 
-This repository contains the source code of a project used in the [How to build a bottom sheet with React Native Reanimated] video on Software Mansion's [YouTube channel](https://www.youtube.com/@SoftwareMansion).
+This repository contains the source code of a project used in the [How to make a bottom sheet with React Native Reanimated](https://www.youtube.com/watch?v=lYYiuXcTnnE) video on Software Mansion's [YouTube channel](https://www.youtube.com/@SoftwareMansion).
 
 You can use this code to follow along the video or compare your code with the final solution.
 
